@@ -1,9 +1,9 @@
 ﻿using System.Runtime.CompilerServices;
-using Task.BLL.Models;
-using Task.DAL.Interfaces;
-using Task.DAL.Repositories;
+using CartingService.BLL.Models;
+using CartingService.DAL.Interfaces;
+using CartingService.DAL.Repositories;
 
-namespace Task.DAL.DalAppBuilders
+namespace CartingService.DAL.DalAppBuilders
 {
     public static class RepositoriesAppBuilder
     {

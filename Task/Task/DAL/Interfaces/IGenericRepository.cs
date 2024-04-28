@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Task.BLL.Models;
+using CartingService.BLL.Models;
 
-namespace Task.DAL.Interfaces
+namespace CartingService.DAL.Interfaces
 {
     public interface IGenericRepository<T>
     {
-        public void UpsertRecord(CartModel record);
-        public void DeleteRecord(Guid id);
+        public bool UpsertRecord(CartModel record);
+        public bool DeleteRecord(Guid id);
         public CartModel GetRecord(Guid id);
         public IEnumerable<CartModel> GetAllRecords();
 

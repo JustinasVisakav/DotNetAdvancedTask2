@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Task.BLL.Interfaces;
-using Task.BLL.Models;
-using Task.DAL.Interfaces;
-using Task.DAL.Repositories;
+using CartingService.BLL.Interfaces;
+using CartingService.BLL.Models;
+using CartingService.DAL.Interfaces;
+using CartingService.DAL.Repositories;
 
-namespace Task1.BLL.Services
+namespace CartingService.BLL.Services
 {
     public class CartService : ICartService
     {
@@ -23,8 +23,7 @@ namespace Task1.BLL.Services
         {
             var cart = repository.GetRecord(id);
             cart.Items.AddRange(items);
-            repository.UpsertRecord(cart);
-            return true;
+            return repository.UpsertRecord(cart);
         }
 
         public Guid CreateNewCart()
@@ -46,8 +45,8 @@ namespace Task1.BLL.Services
             {
                 cart.Items.Remove(cart.Items.FirstOrDefault(x=>x.Id == item.Id));
             }
-            repository.UpsertRecord(cart);
-            return true;
+            
+            return repository.UpsertRecord(cart);
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Task.BLL.Models
+namespace CartingService.BLL.Models
 {
     public class ItemModel
     {

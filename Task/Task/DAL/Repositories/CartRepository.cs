@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using LiteDB;
-using Task.DAL.Interfaces;
-using Task.BLL.Models;
+﻿using LiteDB;
+using CartingService.DAL.Interfaces;
+using CartingService.BLL.Models;
 
-namespace Task.DAL.Repositories
+namespace CartingService.DAL.Repositories
 {
     public class CartRepository : IGenericRepository<CartModel>
     {
@@ -18,14 +13,14 @@ namespace Task.DAL.Repositories
             this.db = db.GetCollection<CartModel>("Cart");
         }
 
-        public void UpsertRecord(CartModel record)
+        public bool UpsertRecord(CartModel record)
         {
-            db.Upsert(record);
+            return db.Upsert(record);
         }
 
-        public void DeleteRecord(Guid id)
+        public bool DeleteRecord(Guid id)
         {
-            db.Delete(id);
+            return db.Delete(id);
         }
 
         public IEnumerable<CartModel> GetAllRecords()

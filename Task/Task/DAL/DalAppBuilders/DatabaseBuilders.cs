@@ -1,6 +1,6 @@
 ﻿using LiteDB;
 
-namespace Task.DAL.DalAppBuilders
+namespace CartingService.DAL.DalAppBuilders
 {
     public static class DatabaseBuilders
     {

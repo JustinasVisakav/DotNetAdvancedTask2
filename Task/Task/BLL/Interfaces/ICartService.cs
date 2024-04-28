@@ -1,6 +1,6 @@
-﻿using Task.BLL.Models;
+﻿using CartingService.BLL.Models;
 
-namespace Task.BLL.Interfaces
+namespace CartingService.BLL.Interfaces
 {
     public interface ICartService
     {

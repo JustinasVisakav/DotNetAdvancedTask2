@@ -1,7 +1,7 @@
-﻿using Task.BLL.Interfaces;
-using Task1.BLL.Services;
+﻿using CartingService.BLL.Interfaces;
+using CartingService.BLL.Services;
 
-namespace Task.BLL.ServiceAppBuilder
+namespace CartingService.BLL.ServiceAppBuilder
 {
     public static class AddServices
     {

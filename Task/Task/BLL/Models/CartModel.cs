@@ -1,5 +1,5 @@
 ﻿
-namespace Task.BLL.Models
+namespace CartingService.BLL.Models
 {
     public class CartModel
     {

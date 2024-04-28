@@ -1,9 +1,6 @@
-using Task.BLL.Models;
-using Task.BLL.ServiceAppBuilder;
-using Task.DAL.DalAppBuilders;
-using Task.DAL.Interfaces;
-using Task.DAL.Repositories;
-using Task1.BLL.Services;
+using CartingService.BLL.ServiceAppBuilder;
+using CartingService.DAL.DalAppBuilders;
+using CartingService.BLL.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 

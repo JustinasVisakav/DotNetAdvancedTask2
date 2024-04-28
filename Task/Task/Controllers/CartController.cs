@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Task.BLL.Interfaces;
-using Task.BLL.Models;
-using Task1.BLL.Services;
+using CartingService.BLL.Interfaces;
+using CartingService.BLL.Models;
 
-namespace Task.Controllers
+namespace CartingService.Controllers
 {
     [ApiController]
     [Route("[controller]")]
