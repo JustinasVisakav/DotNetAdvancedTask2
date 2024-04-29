@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
-namespace CatalogService.Domain.ContextKeeper
+namespace CatalogService.DAL.ContextKeeper
 {
     public class DatabaseContext : DbContext
     {
@@ -15,15 +15,11 @@ namespace CatalogService.Domain.ContextKeeper
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //base.OnModelCreating(modelBuilder);
-
             modelBuilder.Entity<CategoryModel>().HasOne(x=>x.Child).WithOne(x=>x.Parent);
-            modelBuilder.Entity<ItemModel>().HasOne(x => x.Category).WithMany(x => x.Items).HasPrincipalKey(x => x.Id).HasForeignKey(x=>x.CategoryId);
-        }
+            modelBuilder.Entity<CategoryModel>().HasKey(x => x.Id);
 
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //{
-        //    base.OnConfiguring(optionsBuilder);
-        //}
+            modelBuilder.Entity<ItemModel>().HasOne(x => x.Category).WithMany(x => x.Items).HasPrincipalKey(x => x.Id).HasForeignKey(x=>x.CategoryId);
+            modelBuilder.Entity<ItemModel>().HasKey(x => x.Id);
+        }
     }
 }

@@ -1,4 +1,4 @@
-﻿using CatalogService.Domain.ContextKeeper;
+﻿using CatalogService.DAL.ContextKeeper;
 using CatalogService.Domain.Interfaces;
 using CategoryService.Tests.TestHelpers;
 using Microsoft.Extensions.DependencyInjection;

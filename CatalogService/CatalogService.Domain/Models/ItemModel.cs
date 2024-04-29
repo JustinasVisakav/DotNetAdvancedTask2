@@ -9,7 +9,6 @@ namespace CatalogService.Domain.Models
 {
     public class ItemModel
     {
-        [Key]
         public Guid Id { get; set; }
         [Required]
         public string Name { get; set; }

@@ -1,4 +1,4 @@
-﻿using CatalogService.Domain.ContextKeeper;
+﻿using CatalogService.DAL.ContextKeeper;
 using CatalogService.Domain.Models;
 using CategoryService.Tests.TestHelpers;
 

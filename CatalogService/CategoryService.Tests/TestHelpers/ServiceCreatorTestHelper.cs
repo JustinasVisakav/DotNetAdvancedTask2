@@ -1,18 +1,8 @@
 ﻿using CatalogService.BLL.Builders;
-using CatalogService.BLL.Interfaces;
-using CatalogService.BLL.Services;
 using CatalogService.DAL.Builders;
-using CatalogService.DAL.Repositories;
-using CatalogService.Domain.ContextKeeper;
-using CatalogService.Domain.Interfaces;
-using CategoryService.Tests.DalTests;
+using CatalogService.DAL.ContextKeeper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 namespace CategoryService.Tests.TestHelpers
 {
     public static class ServiceCreatorTestHelper

@@ -1,17 +1,9 @@
 ﻿using CatalogService.BLL.Interfaces;
-using CatalogService.Domain.ContextKeeper;
-using CatalogService.Domain.Interfaces;
-using CatalogService.Domain.Models;
+using CatalogService.DAL.ContextKeeper;
 using CategoryService.Tests.DalTests;
 using CategoryService.Tests.TestHelpers;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CategoryService.Tests
 {

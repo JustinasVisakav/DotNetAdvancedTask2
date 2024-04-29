@@ -1,4 +1,4 @@
-﻿using CatalogService.Domain.ContextKeeper;
+﻿using CatalogService.DAL.ContextKeeper;
 using CatalogService.Domain.Interfaces;
 using CatalogService.Domain.Models;
 using Microsoft.EntityFrameworkCore;

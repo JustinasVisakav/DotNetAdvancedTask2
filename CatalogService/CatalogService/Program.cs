@@ -1,4 +1,4 @@
-using CatalogService.Domain.ContextKeeper;
+using CatalogService.DAL.ContextKeeper;
 using Microsoft.EntityFrameworkCore;
 using CatalogService.BLL.Builders;
 using CatalogService.DAL.Builders;
