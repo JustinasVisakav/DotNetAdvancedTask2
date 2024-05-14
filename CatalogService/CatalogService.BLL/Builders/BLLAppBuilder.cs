@@ -13,7 +13,7 @@ namespace CatalogService.BLL.Builders
     {
         public static void AddBllServices(this IServiceCollection service)
         {
-            service.AddScoped<ICategoryService,CategoryServiceService>();
+            service.AddScoped<ICategoryService,CategoryService>();
             service.AddScoped<IItemService,ItemService>();
         }
     }

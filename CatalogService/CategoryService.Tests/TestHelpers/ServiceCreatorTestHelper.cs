@@ -12,7 +12,9 @@ namespace CategoryService.Tests.TestHelpers
             var serviceCollection = new ServiceCollection();
             serviceCollection.AddBllServices();
             serviceCollection.AddDalServices();
-            serviceCollection.AddDbContext<DatabaseContext>(context => context.UseInMemoryDatabase(Guid.NewGuid().ToString()));
+            serviceCollection.AddDbContext<DatabaseContext>(context => {
+                context.UseInMemoryDatabase(Guid.NewGuid().ToString());
+            }) ;
             var inMemorySettings = new Dictionary<string, string> { { "IsUnitTest", "true" } };
 
             return serviceCollection.BuildServiceProvider();

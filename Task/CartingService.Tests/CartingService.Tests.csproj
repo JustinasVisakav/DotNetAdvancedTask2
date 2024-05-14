@@ -17,7 +17,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\Task\CatingService.csproj" />
+	  <ProjectReference Include="..\CartingService\CatingService.csproj" />
 	</ItemGroup>
 
 </Project>

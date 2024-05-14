@@ -9,10 +9,10 @@ namespace CatalogService.BLL.Interfaces
 {
     public interface IItemService
     {
-        public ItemModel GetItem(Guid id);
-        public List<ItemModel> GetItems();
-        public bool AddItem(ItemModel item);
-        public bool UpdateItem(ItemModel item);
+        public ItemDtoModel GetItem(Guid id);
+        public List<ItemDtoModel> GetItems();
+        public bool AddItem(ItemDtoModel item);
+        public bool UpdateItem(ItemDtoModel item);
         public bool DeleteItem(Guid id);
     }
 }

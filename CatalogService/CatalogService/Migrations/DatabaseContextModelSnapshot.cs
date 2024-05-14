@@ -22,7 +22,7 @@ namespace CatalogService.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("CatalogService.Domain.Models.CategoryModel", b =>
+            modelBuilder.Entity("CatalogService.DAL.Models.CategoryModel", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -34,6 +34,9 @@ namespace CatalogService.Migrations
                     b.Property<string>("Image")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Items")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -43,14 +46,10 @@ namespace CatalogService.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ChildId")
-                        .IsUnique()
-                        .HasFilter("[ChildId] IS NOT NULL");
-
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("CatalogService.Domain.Models.ItemModel", b =>
+            modelBuilder.Entity("CatalogService.DAL.Models.ItemModel", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -77,34 +76,7 @@ namespace CatalogService.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CategoryId");
-
                     b.ToTable("Items");
-                });
-
-            modelBuilder.Entity("CatalogService.Domain.Models.CategoryModel", b =>
-                {
-                    b.HasOne("CatalogService.Domain.Models.CategoryModel", "Child")
-                        .WithOne("Parent")
-                        .HasForeignKey("CatalogService.Domain.Models.CategoryModel", "ChildId");
-
-                    b.Navigation("Child");
-                });
-
-            modelBuilder.Entity("CatalogService.Domain.Models.ItemModel", b =>
-                {
-                    b.HasOne("CatalogService.Domain.Models.CategoryModel", "Category")
-                        .WithMany("Items")
-                        .HasForeignKey("CategoryId");
-
-                    b.Navigation("Category");
-                });
-
-            modelBuilder.Entity("CatalogService.Domain.Models.CategoryModel", b =>
-                {
-                    b.Navigation("Items");
-
-                    b.Navigation("Parent");
                 });
 #pragma warning restore 612, 618
         }

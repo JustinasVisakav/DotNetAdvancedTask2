@@ -9,10 +9,10 @@ namespace CatalogService.BLL.Interfaces
 {
     public interface ICategoryService
     {
-        public CategoryModel GetCategory(Guid id);
-        public List<CategoryModel> GetCategories();
-        public bool AddCategory(CategoryModel category);
-        public bool UpdateCategory(CategoryModel item);
+        public CategoryDtoModel GetCategory(Guid id);
+        public List<CategoryDtoModel> GetCategories();
+        public bool AddCategory(CategoryDtoModel category);
+        public bool UpdateCategory(CategoryDtoModel item);
         public bool DeleteCategory(Guid id);
     }
 }

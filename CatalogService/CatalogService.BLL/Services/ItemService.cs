@@ -12,7 +12,7 @@ namespace CatalogService.BLL.Services
         {
             this.repo = repo;
         }
-        public bool AddItem(ItemModel item)
+        public bool AddItem(ItemDtoModel item)
         {
             return repo.AddItem(item);
         }
@@ -22,17 +22,17 @@ namespace CatalogService.BLL.Services
             return repo.DeleteItem(id);
         }
 
-        public ItemModel GetItem(Guid id)
+        public ItemDtoModel GetItem(Guid id)
         {
             return repo.GetItem(id);
         }
 
-        public List<ItemModel> GetItems()
+        public List<ItemDtoModel> GetItems()
         {
             return repo.GetItems();
         }
 
-        public bool UpdateItem(ItemModel item)
+        public bool UpdateItem(ItemDtoModel item)
         {
             return repo.UpdateItem(item);
         }

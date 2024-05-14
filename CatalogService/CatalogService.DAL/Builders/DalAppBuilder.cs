@@ -1,4 +1,6 @@
-﻿using CatalogService.DAL.Repositories;
+﻿using CatalogService.DAL.Extensions;
+using CatalogService.DAL.Interfaces;
+using CatalogService.DAL.Repositories;
 using CatalogService.Domain.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -15,6 +17,8 @@ namespace CatalogService.DAL.Builders
         {
             service.AddScoped<ICategoryRepository, CategoryRepository>();
             service.AddScoped<IItemRepository, ItemRepository>();
+            service.AddScoped<IItemMapper,ItemMapper>();
+            service.AddScoped<ICategoryMapper, CategoryMapper>();
         }
     }
 }

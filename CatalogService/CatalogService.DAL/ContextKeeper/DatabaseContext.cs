@@ -1,4 +1,5 @@
-﻿using CatalogService.Domain.Models;
+﻿using CatalogService.DAL.Models;
+using CatalogService.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
@@ -15,11 +16,9 @@ namespace CatalogService.DAL.ContextKeeper
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<CategoryModel>().HasOne(x=>x.Child).WithOne(x=>x.Parent);
             modelBuilder.Entity<CategoryModel>().HasKey(x => x.Id);
             modelBuilder.Entity<CategoryModel>().Property(x => x.Name).IsRequired();
 
-            modelBuilder.Entity<ItemModel>().HasOne(x => x.Category).WithMany(x => x.Items).HasPrincipalKey(x => x.Id).HasForeignKey(x=>x.CategoryId);
             modelBuilder.Entity<ItemModel>().HasKey(x => x.Id);
             modelBuilder.Entity<ItemModel>().Property(x => x.Name).IsRequired();
             modelBuilder.Entity<ItemModel>().Property(x => x.Price).IsRequired();

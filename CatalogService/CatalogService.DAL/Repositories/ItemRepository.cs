@@ -1,29 +1,32 @@
 ﻿using CatalogService.DAL.ContextKeeper;
+using CatalogService.DAL.Extensions;
+using CatalogService.DAL.Interfaces;
 using CatalogService.Domain.Interfaces;
 using CatalogService.Domain.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CatalogService.DAL.Repositories
 {
     internal class ItemRepository : IItemRepository
     {
         private readonly DatabaseContext db;
+        private readonly IItemMapper mapper;
 
-        public ItemRepository(DatabaseContext db)
+        public ItemRepository(DatabaseContext db, IItemMapper mapper)
         {
             this.db = db;
+            this.mapper = mapper;
         }
 
-        public bool AddItem(ItemModel item)
+        public bool AddItem(ItemDtoModel item)
         {
             try
             {
-                db.Items.Add(item);
+                if (db.Items.Any(x=>x.Id == item.Id))
+                {
+                    return false;
+                }
+                db.Items.Add(mapper.ItemToModel(item));
                 db.SaveChanges();
                 return true;
             }
@@ -37,7 +40,7 @@ namespace CatalogService.DAL.Repositories
         {
             try
             {
-                db.Remove(GetItem(id));
+                db.Items.Remove(db.Items.FirstOrDefault(x => x.Id == id));
                 db.SaveChanges();
                 return true;
             }
@@ -47,23 +50,35 @@ namespace CatalogService.DAL.Repositories
             }
         }
 
-        public ItemModel GetItem(Guid id)
+        public ItemDtoModel GetItem(Guid id)
         {
-            return db.Items.FirstOrDefault(x => x.Id == id);
+            var result = db.Items.FirstOrDefault(x => x.Id == id);
+            if (result != null)
+            {
+                return mapper.ItemToItemDtoModel(result);
+            }
+            return null;
         }
 
-        public List<ItemModel> GetItems()
+        public List<ItemDtoModel> GetItems()
         {
-            return db.Items.Include(x => x.Category).ToList();
+            List<ItemDtoModel> result = new();
+            var resultFromDb = db.Items.ToList();
+            foreach (var item in resultFromDb)
+            {
+                result.Add(mapper.ItemToItemDtoModel(item));
+            }
+            return result;
         }
 
-        public bool UpdateItem(ItemModel item)
+        public bool UpdateItem(ItemDtoModel item)
         {
             try
             {
-                db.Update(item);
-                db.SaveChanges();
-                return true;
+                db.Items.Remove(db.Items.FirstOrDefault(x => x.Id == item.Id));
+                db.Items.Add(mapper.ItemToModel(item));
+
+                return db.SaveChanges() == 1;
             }
             catch (Exception ex)
             {

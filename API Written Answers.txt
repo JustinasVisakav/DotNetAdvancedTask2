@@ -1,0 +1,67 @@
+1 Explain the difference between terms: REST and RESTful. What are the six constraints?
+2 HTTP Request Methods (the difference) and HTTP Response codes. What is idempotency?  Is HTTP the only protocol supported by the REST?
+3 What are the advantages of statelessness in RESTful services?
+4 How can caching be organized in RESTful services?
+5 How can versioning be organized in RESTful services?
+6 What are the best practices of resource naming?
+7 What are OpenAPI and Swagger? What implementations/libraries for .NET exist? When would you prefer to generate API docs automatically and when manually?
+8 What is OData? When will you choose to follow it and when not?
+9 What is Richardson Maturity Model? Is it always a good idea to reach the 3rd level of maturity?
+10 What does pros and cons REST have in comparison with other web API types?
+
+1 REST is the architecture of the api while RESTful refers to api that adheres to principles of REST architecture. Rest constraints are :
+	1 Client-Server The architecture should be divided into a client and a server, each with distinct responsibilities.
+	2 Statelessness The server should not store any client context between requests.
+	3 Cacheability Responses from the server should explicitly indicate whether they are cacheable or not.
+	4 Layered System The architecture should be composed of multiple layers, with each layer performing a specific function.
+	5 Uniform Interface The interactions between clients and servers should be standardized and uniform across the entire system.
+	6 Code on Demand (Optional) Servers can optionally extend the functionality of clients by transferring executable code, such as JavaScript, as part of the response.
+
+2 Most used HTTP request methods are Post Put Get Update, they do spesific function, for example post is used to add data to server while get is used to get data from server
+
+Response codes are :
+100: Informational responses.
+200: Successful responses.
+300: Redirection responses.
+400: Client error responses (e.g., 404 Not Found).
+500: Server error responses (e.g., 500 Internal Server Error).
+
+Idempotency is a property of certain HTTP methods that ensures that multiple identical requests have the same effect as a single request. In other words, performing the same action multiple times should produce the same result. Idempotent methods include GET, PUT, and DELETE.
+
+HTTP is not the only protocol supported by RESTful APIs, but it is most commonly used one.
+
+3 The benefits of statelesness are:
+Simplicity: Statelessness simplifies the design and implementation of RESTful services by eliminating the need for servers to maintain client state between requests. 
+Scalability: Stateless services are inherently more scalable because they do not maintain session state on the server.
+Flexibility: Stateless services are more flexible and resilient to failures because any server in a cluster can handle any request from a client.
+Caching: Statelessness enables caching of responses at various levels, including client-side caches, intermediary caches, and server-side caches.
+Load Balancing: Stateless services are easier to load balance because requests can be distributed across servers without considering the client's session state.
+Improved Performance: With stateless services, servers do not need to spend resources managing and storing client state.
+Easier Maintenance and Deployment: Stateless services are easier to maintain and deploy because they do not rely on shared session state stored on the server.
+
+4 Caching can be organised on client side, intermediatly like proxies or serverside
+
+5 Versioning can be Path-Based Versioning, Header Versioning, Query Parameter Versioning, URL-Based Versioning, Accept Header Versioning or Media Type Versioning
+
+6 Best naming practices are Use Singular Nouns for Individual Resources, Use Nouns to Represent Resources, Use Plural Nouns for Collection Resources, Use Descriptive and Meaningful Names, Maintain Consistency Across Endpoints.
+
+7 Open API is technology to automatically generate documentation for api endpoints and swagger is ui to represent that documentation.
+
+8 OData (Open Data Protocol) is a standardized protocol for creating and consuming RESTful APIs for querying and manipulating data.
+Best used when Interoperability, Queries, Automatic Code Generation, Metadata Discovery, Protocol Extensibility is neede
+It is better not to use it when you know that data comming from database will need to be manipulated extensively, also when performance is key.
+
+9 The Richardson Maturity Model is a framework proposed by Leonard Richardson to assess the maturity of a web API based on its adherence to REST principles. The model consists of four levels, each representing a progressively more RESTful design:
+
+Level 0 - The Swamp of POX (Plain Old XML): At this level, APIs use HTTP as a transport mechanism but do not adhere to REST principles. Instead, they often rely on single endpoints for all operations and use custom or non-standard HTTP methods.
+Level 1 - Resources: APIs at this level introduce the concept of resources, which are identified by URIs. However, they still use HTTP methods inconsistently and may not make full use of HTTP status codes.
+Level 2 - HTTP Verbs: APIs at this level use HTTP methods (GET, POST, PUT, DELETE) correctly to perform CRUD (Create, Read, Update, Delete) operations on resources. Each method has a specific meaning, and HTTP status codes are used appropriately.
+Level 3 - Hypermedia Controls (HATEOAS): APIs at this level include hypermedia links in responses to enable clients to navigate the API dynamically. Clients can discover available actions and resources by following links embedded in the responses.
+
+While Level 3 represents the ideal state of RESTfulness, it also introduces additional complexity and may not be practical or necessary for all use cases.
+
+10 RESTful APIs have several advantages and disadvantages compared to other web API types such as SOAP (Simple Object Access Protocol) and GraphQL. Here's a comparison of the pros and cons of REST:
+
+Pros of REST: Simplicity, Scalability, Interoperability, Caching, Statelessness
+
+Cons of REST: Overfetching/Underfetching, Versioning, Limited Query Capabilities, Documentation Overhead.

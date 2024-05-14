@@ -1,5 +1,7 @@
 ﻿using CatalogService.BLL.Interfaces;
 using CatalogService.DAL.ContextKeeper;
+using CatalogService.DAL.Extensions;
+using CatalogService.DAL.Interfaces;
 using CategoryService.Tests.DalTests;
 using CategoryService.Tests.TestHelpers;
 using Microsoft.Extensions.DependencyInjection;
@@ -15,6 +17,8 @@ namespace CategoryService.Tests
         private static DalTestDataStorage _inMemoryDataStorage;
         private static ICategoryService _categoryService;
         private static IItemService _itemService;
+        private static IItemMapper _itemMapper;
+        private static ICategoryMapper _categoryMapper;
 
         [ClassInitialize]
         public static void ClassInitialize(TestContext context)
@@ -25,6 +29,8 @@ namespace CategoryService.Tests
             DalTestDataStorage.FillTheDatabaseWithTestData(_context, _inMemoryDataStorage);
             _categoryService = (ICategoryService)_serviceProvider.GetService(typeof(ICategoryService));
             _itemService = (IItemService)_serviceProvider.GetService(typeof(IItemService));
+            _itemMapper = (IItemMapper)_serviceProvider.GetService(typeof(IItemMapper));
+            _categoryMapper = (ICategoryMapper)_serviceProvider.GetService(typeof(ICategoryMapper));
         }
 
         [TestMethod]
@@ -46,7 +52,7 @@ namespace CategoryService.Tests
         [TestMethod]
         public void AddCategory()
         {
-            var newCategory = ModelCreator.CreateCategoryModel();
+            var newCategory = ModelCreator.CreateCategoryDtoModel();
 
             var result = _categoryService.AddCategory(newCategory);
 
@@ -56,7 +62,7 @@ namespace CategoryService.Tests
         [TestMethod]
         public void RemoveCategory()
         {
-            var newCategory = ModelCreator.CreateCategoryModel();
+            var newCategory = ModelCreator.CreateCategoryDtoModel();
 
             _categoryService.AddCategory(newCategory);
 
@@ -68,7 +74,7 @@ namespace CategoryService.Tests
         [TestMethod]
         public void UpdateCategory()
         {
-            var categoryToUpdate = _inMemoryDataStorage.Category2;
+            var categoryToUpdate = _categoryMapper.CategoryToDtoModel(_inMemoryDataStorage.Category2);
 
             categoryToUpdate.Image = "New Image";
 
@@ -96,7 +102,7 @@ namespace CategoryService.Tests
         [TestMethod]
         public void AddItem()
         {
-            var itemToAdd = ModelCreator.CreateItemModel();
+            var itemToAdd = ModelCreator.CreateItemDtoModel();
             var result = _itemService.AddItem(itemToAdd);
             Assert.IsTrue(result);
         }
@@ -104,7 +110,7 @@ namespace CategoryService.Tests
         [TestMethod]
         public void RemoveItem()
         {
-            var newItem = ModelCreator.CreateItemModel();
+            var newItem = ModelCreator.CreateItemDtoModel();
             _itemService.AddItem(newItem);
             var result = _itemService.DeleteItem(newItem.Id);
             Assert.IsTrue(result);
@@ -113,7 +119,7 @@ namespace CategoryService.Tests
         [TestMethod]
         public void UpdateItem()
         {
-            var itemToUpdate = _inMemoryDataStorage.Item2;
+            var itemToUpdate = _itemMapper.ItemToItemDtoModel(_inMemoryDataStorage.Item2);
             itemToUpdate.Name = "New name";
             var result = _itemService.UpdateItem(itemToUpdate);
             Assert.IsTrue(result);

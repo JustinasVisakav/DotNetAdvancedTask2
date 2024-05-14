@@ -1,4 +1,6 @@
 ﻿using CatalogService.BLL.Services;
+using CatalogService.DAL.Extensions;
+using CatalogService.DAL.Models;
 using CatalogService.Domain.Interfaces;
 using CatalogService.Domain.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -55,7 +57,7 @@ namespace CategoryService.Tests.BllTests
         public void ItemServiceAddItem()
         {
             //Arrange
-            ItemModel itemModel = new ItemModel(); 
+            ItemDtoModel itemModel = new ItemDtoModel(); 
             var itemRepositoryeMock = CreateItemRepositoryMock();
             var itemServoce = new ItemService(itemRepositoryeMock.Object);
 
@@ -70,7 +72,7 @@ namespace CategoryService.Tests.BllTests
         public void ItemServiceUpdateItem()
         {
             //Arrange
-            ItemModel itemModel = new ItemModel();
+            ItemDtoModel itemModel = new ItemDtoModel();
             var itemRepositoryeMock = CreateItemRepositoryMock();
             var itemServoce = new ItemService(itemRepositoryeMock.Object);
 
@@ -86,7 +88,7 @@ namespace CategoryService.Tests.BllTests
         {
             //Arrange
             var categoryRepositoryeMock = CreateCategoryRepositoryMock();
-            var categoryServoce = new CategoryServiceService(categoryRepositoryeMock.Object);
+            var categoryServoce = new CatalogService.BLL.Services.CategoryService(categoryRepositoryeMock.Object);
 
             //Act
             var result = categoryServoce.GetCategory(Guid.NewGuid());
@@ -100,7 +102,7 @@ namespace CategoryService.Tests.BllTests
         {
             //Arrange
             var categoryRepositoryeMock = CreateCategoryRepositoryMock();
-            var categoryServoce = new CategoryServiceService(categoryRepositoryeMock.Object);
+            var categoryServoce = new CatalogService.BLL.Services.CategoryService(categoryRepositoryeMock.Object);
 
             //Act
             var result = categoryServoce.GetCategories();
@@ -114,7 +116,7 @@ namespace CategoryService.Tests.BllTests
         {
             //Arrange
             var categoryRepositoryeMock = CreateCategoryRepositoryMock();
-            var categoryServoce = new CategoryServiceService(categoryRepositoryeMock.Object);
+            var categoryServoce = new CatalogService.BLL.Services.CategoryService(categoryRepositoryeMock.Object);
 
             //Act
             var result = categoryServoce.DeleteCategory(Guid.NewGuid());
@@ -127,9 +129,9 @@ namespace CategoryService.Tests.BllTests
         public void CategoryServiceAddCategory()
         {
             //Arrange
-            CategoryModel categoryModel = new CategoryModel();
+            CategoryDtoModel categoryModel = new CategoryDtoModel();
             var categoryRepositoryeMock = CreateCategoryRepositoryMock();
-            var categoryServoce = new CategoryServiceService(categoryRepositoryeMock.Object);
+            var categoryServoce = new CatalogService.BLL.Services.CategoryService(categoryRepositoryeMock.Object);
 
             //Act
             var result = categoryServoce.AddCategory(categoryModel);
@@ -142,9 +144,9 @@ namespace CategoryService.Tests.BllTests
         public void CategoryServiceUpdateCategory()
         {
             //Arrange
-            CategoryModel categoryModel = new CategoryModel();
+            CategoryDtoModel categoryModel = new CategoryDtoModel();
             var categoryRepositoryeMock = CreateCategoryRepositoryMock();
-            var categoryServoce = new CategoryServiceService(categoryRepositoryeMock.Object);
+            var categoryServoce = new CatalogService.BLL.Services.CategoryService(categoryRepositoryeMock.Object);
 
             //Act
             var result = categoryServoce.UpdateCategory(categoryModel);
@@ -155,14 +157,14 @@ namespace CategoryService.Tests.BllTests
 
         private Mock<IItemRepository> CreateItemRepositoryMock()
         {
-            var itemModel = new ItemModel();
-            var itemModels = new List<ItemModel>();
+            var itemModel = new ItemDtoModel();
+            var itemModels = new List<ItemDtoModel>();
             itemModels.Add(itemModel);
             var itemRepositoryMock = new Mock<IItemRepository>();
             itemRepositoryMock.Setup(x => x.GetItem(It.IsAny<Guid>())).Returns(itemModel);
-            itemRepositoryMock.Setup(x => x.UpdateItem(It.IsAny<ItemModel>())).Returns(true);
+            itemRepositoryMock.Setup(x => x.UpdateItem(It.IsAny<ItemDtoModel>())).Returns(true);
             itemRepositoryMock.Setup(x => x.DeleteItem(It.IsAny<Guid>())).Returns(true);
-            itemRepositoryMock.Setup(x => x.AddItem(It.IsAny<ItemModel>())).Returns(true);
+            itemRepositoryMock.Setup(x => x.AddItem(It.IsAny<ItemDtoModel>())).Returns(true);
             itemRepositoryMock.Setup(x=>x.GetItems()).Returns(itemModels);
 
             return itemRepositoryMock;
@@ -170,14 +172,14 @@ namespace CategoryService.Tests.BllTests
 
         private Mock<ICategoryRepository> CreateCategoryRepositoryMock()
         {
-            var categoryModel = new CategoryModel();
-            var categoryModels = new List<CategoryModel>();
+            var categoryModel = new CategoryDtoModel();
+            var categoryModels = new List<CategoryDtoModel>();
             categoryModels.Add(categoryModel);
             var categoryMock = new Mock<ICategoryRepository>();
             categoryMock.Setup(x => x.GetCategory(It.IsAny<Guid>())).Returns(categoryModel);
-            categoryMock.Setup(x => x.UpdateCategory(It.IsAny<CategoryModel>())).Returns(true);
+            categoryMock.Setup(x => x.UpdateCategory(It.IsAny<CategoryDtoModel>())).Returns(true);
             categoryMock.Setup(x => x.DeleteCategory(It.IsAny<Guid>())).Returns(true);
-            categoryMock.Setup(x => x.AddCategory(It.IsAny<CategoryModel>())).Returns(true);
+            categoryMock.Setup(x => x.AddCategory(It.IsAny<CategoryDtoModel>())).Returns(true);
             categoryMock.Setup(x => x.GetCategories()).Returns(categoryModels);
 
             return categoryMock;
