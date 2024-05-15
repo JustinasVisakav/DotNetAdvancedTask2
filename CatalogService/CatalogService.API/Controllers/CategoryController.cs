@@ -19,7 +19,12 @@ namespace CatalogService.API.Controllers
             this.itemService = itemService;
         }
 
+        /// <summary>
+        /// Gets all categories
+        /// </summary>
+        /// <returns>List of categories</returns>
         [HttpGet]
+        [ProducesResponseType(typeof(List<CategoryApiModel>), 200)]
         public IActionResult Get()
         {
             var categories = service.GetCategories();
@@ -36,7 +41,13 @@ namespace CatalogService.API.Controllers
             return Ok(categories.Select(x=>x.ToApiModel()).ToList());
         }
 
+        /// <summary>
+        /// Gets specific category
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Category</returns>
         [HttpGet("{id}")]
+        [ProducesResponseType(typeof(CategoryApiModel), 200)]
         public IActionResult GetCategory(Guid id)
         {
             var category = service.GetCategory(id);
@@ -49,7 +60,13 @@ namespace CatalogService.API.Controllers
             return Ok(category.ToApiModel());
         }
 
+        /// <summary>
+        /// Deletes category
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Returns boolean of opperation success</returns>
         [HttpDelete("{id}")]
+        [ProducesResponseType(typeof(bool), 200)]
         public IActionResult DeleteCategory(Guid id)
         {
             var category = service.GetCategory(id);
@@ -72,7 +89,13 @@ namespace CatalogService.API.Controllers
             return Ok(result);
         }
 
+        /// <summary>
+        /// Modifies category
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns>Boolean of category success</returns>
         [HttpPut]
+        [ProducesResponseType(typeof(bool), 200)]
         public IActionResult Update([FromBody] CategoryDtoModel model)
         {
             if (model.Items != null)
@@ -90,7 +113,13 @@ namespace CatalogService.API.Controllers
             return Ok(result);
         }
 
+        /// <summary>
+        /// Creates new category
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns>Boolean of operation success</returns>
         [HttpPost]
+        [ProducesResponseType(typeof(bool), 200)]
         public IActionResult Post([FromBody] CategoryDtoModel model)
         {
             if(model.Items != null)

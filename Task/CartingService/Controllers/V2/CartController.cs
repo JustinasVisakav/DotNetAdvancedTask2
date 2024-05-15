@@ -17,8 +17,13 @@ namespace CatingService.Controllers.V2
             this.service = service;
         }
 
+        /// <summary>
+        /// Used to create new empty cart
+        /// </summary>
+        /// <returns>CartId on success</returns>
         [HttpPost]
-        public IActionResult Get()
+        [ProducesResponseType(typeof(bool), 200)]
+        public IActionResult Create()
         {
             var cartId = service.CreateNewCart();
             if (string.IsNullOrEmpty(cartId.ToString()))
@@ -27,7 +32,14 @@ namespace CatingService.Controllers.V2
             return Ok(cartId);
         }
 
+        /// <summary>
+        /// Used to add item to cart
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="items"></param>
+        /// <returns>Boolean if operation was successful</returns>
         [HttpPut("{id}")]
+        [ProducesResponseType(typeof(bool), 200)]
         public IActionResult AddToCart(Guid id, [FromBody] List<ItemModel> items)
         {
             var result = service.AddToCartCart(id, items);
@@ -38,7 +50,14 @@ namespace CatingService.Controllers.V2
             return Ok(result);
         }
 
+        /// <summary>
+        /// Used to delete items from cart
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="items"></param>
+        /// <returns>Returns boolean of if operation was successful</returns>
         [HttpDelete("{id}")]
+        [ProducesResponseType(typeof(bool), 200)]
         public IActionResult Delete(Guid id, [FromBody] List<ItemModel> items)
         {
             var result = service.RemoveFromCart(id, items);
@@ -49,6 +68,11 @@ namespace CatingService.Controllers.V2
             return Ok(result);
         }
 
+        /// <summary>
+        /// Gets items from specified cart
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>List of items in the cart</returns>
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(List<ItemModel>), 200)]
         public IActionResult Get(Guid id)
