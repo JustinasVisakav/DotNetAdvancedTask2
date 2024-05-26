@@ -1,4 +1,5 @@
-﻿using CatalogService.API.Models;
+﻿using CatalogSercice.Infrastructure.Queue.Interfaces;
+using CatalogService.API.Models;
 using CatalogService.BLL.Interfaces;
 using CatalogService.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -34,10 +35,10 @@ namespace CatalogService.API.Controllers
                 {
                     return StatusCode(500);
                 }
-                return Ok(items.Select(x=>x.ToApiModel()).ToList());
+                return Ok(items.Select(x => x.ToApiModel()).ToList());
             }
 
-            var result = categoryService.GetCategory(categoryId).Items.Select(x=>x.ToApiModel()).ToList();
+            var result = categoryService.GetCategory(categoryId).Items.Select(x => x.ToApiModel()).ToList();
             if (result == null)
             {
                 return StatusCode(500);

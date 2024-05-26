@@ -1,0 +1,67 @@
+1. What is Message Based Architecture? What is the difference between Message Based Architecture and Event Based Architecture?’
+2. What is Message Broker? How do message brokers work?
+3. When should you use message brokers?
+4. Name and describe any distribution pattern.
+5. What are the advantages and disadvantages of using message broker?
+6. What is the difference between Queue and Topic?
+7. What are the typical failures in MBA? How can you address them? What is Saga pattern?
+
+
+1. Message-Based Architecture (MBA) is a design approach where components or services communicate by sending messages to each other
+Main difference is that MBA sends messages with instructutions while EBA (Event based Architecture) rely on changes in state. MBA is can handle bigger loads since it stores messages 
+in a queue while EBA delivers message imediatly. EBA is more orianted to real time compute
+
+2. A message broker is an intermediary software module that translates messages from the messaging protocol of the sender to the messaging protocol of the receiver
+Message brokers operate by managing message queues and topics, where messages can be stored until they are processed by consumers
+
+3. Message brokers are particularly useful in scenarios where asynchronous, decoupled communication between components is beneficial
+
+4 Broker Pattern: The broker pattern involves a broker component that coordinates communication between clients and services. Clients send requests to the broker,
+ which routes them to the appropriate services and returns the results to the clients. This pattern is used in message queuing systems and service-oriented architectures (SOA).
+ 
+5. 
+Advantages:
+	Decoupling. Message brokers facilitate loose coupling between services or components by allowing them to communicate asynchronously
+	Asynchronous Communication. Message brokers enable asynchronous processing, where the producer sends a message to the broker and does not wait for the consumer to process it.
+	Scalability. Message brokers can handle high volumes of messages and distribute them across multiple consumers, enabling horizontal scaling.
+	Reliability and Fault Tolerance. Message brokers often provide features like message persistence, acknowledgments, and retries to ensure that messages are not lost and are processed at least once.
+	Load Balancing. Message brokers distribute the workload evenly among multiple consumers, preventing any single consumer from becoming a bottleneck.
+	Buffering and Throttling. Message brokers can act as buffers, storing messages temporarily during spikes in load and releasing them at a controlled rate to avoid overwhelming consumers.
+	Cross-Language and Cross-Platform Communication
+Disadvantages:
+	Complexity. Introducing a message broker adds complexity to the system architecture, requiring additional setup, configuration, and management.
+	Performance Overhead. The message broker introduces some latency due to message queuing, routing, and potential persistence.
+	Single Point of Failure. If the message broker itself fails, it can become a single point of failure unless redundancy and high availability configurations are in place.
+	Resource Consumption. Message brokers require additional computational resources (CPU, memory, storage) to operate, which can increase infrastructure costs.
+	Complex Error Handling. Error handling in message-driven systems can be complex, especially when dealing with message reprocessing, dead-letter queues, and ensuring idempotency.
+	Security Concerns. Message brokers introduce additional security considerations, such as securing message channels, authentication, and authorization.
+	Message Ordering. Maintaining the order of messages can be challenging, especially in a distributed system with multiple consumers.
+	
+6. Queue:
+	A queue is a messaging pattern where messages are stored in a first-in, first-out (FIFO) order.
+	Each message is processed by only one consumer. Once a consumer processes a message, it is removed from the queue.
+Topic:
+	A topic is a messaging pattern that allows messages to be published to a specific channel (topic), and multiple consumers can subscribe to that topic.
+	Each message published to the topic is received by all subscribers.
+	
+7. Usual failures:
+Message Loss:
+Solution: Implement message persistence by storing messages on disk until they are acknowledged by the consumer. Use a reliable message broker that supports durable queues/topics (e.g., RabbitMQ, Kafka). Implement retries and dead-letter queues for failed message deliveries.
+
+Duplicate Messages:
+Solution: Ensure idempotency in message processing, where processing a message multiple times does not have adverse effects. Use unique message identifiers to track and discard duplicate messages.
+
+Consumer Failures:
+Solution: Implement monitoring and alerting to detect consumer failures. Use automatic restarts and scaling to ensure availability. Employ message acknowledgment mechanisms to requeue messages that were not processed.
+
+Broker Failures:
+Solution: Use a highly available and fault-tolerant broker setup with clustering and replication. Implement disaster recovery plans and backups. Monitor broker health and resource usage.
+
+Message Order Issues:
+Solution: Use message ordering guarantees provided by the broker. Implement logic in consumers to reorder messages if necessary, using sequence numbers or timestamps.
+
+Scalability Bottlenecks:
+Solution: Implement horizontal scaling for both brokers and consumers. Use load balancing and partitioning/sharding to distribute the load evenly. Optimize message size and frequency.
+
+The Saga pattern is a design pattern used to manage distributed transactions in a microservices architecture.
+It provides a way to ensure data consistency across multiple services without relying on a single, all-encompassing transaction.

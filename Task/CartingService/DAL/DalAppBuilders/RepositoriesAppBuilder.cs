@@ -9,7 +9,7 @@ namespace CartingService.DAL.DalAppBuilders
     {
         public static void AddRepositories(this IServiceCollection services)
         {
-            services.AddScoped<IGenericRepository<CartModel>, CartRepository>();
+            services.AddSingleton<IGenericRepository<CartModel>, CartRepository>();
         }
     }
 }

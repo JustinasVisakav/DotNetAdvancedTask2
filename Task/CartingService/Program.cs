@@ -5,30 +5,31 @@ using Asp.Versioning;
 using Microsoft.OpenApi.Models;
 using Asp.Versioning.ApiExplorer;
 using System.Reflection;
+using CatingService.BLL.Services;
+using CatingService.BLL.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
-builder.Services.AddApiVersioning(options =>
-{
-    options.ReportApiVersions = true;
-})
-    .AddApiExplorer(
-    options =>
-    {
-        options.GroupNameFormat = "'v'VVV";
-        options.SubstituteApiVersionInUrl = true;
-    });
+//builder.Services.AddApiVersioning(options =>
+//{
+//    options.ReportApiVersions = true;
+//})
+//    .AddApiExplorer(
+//    options =>
+//    {
+//        options.GroupNameFormat = "'v'VVV";
+//        options.SubstituteApiVersionInUrl = true;
+//    });
 
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddHostedService<RabbitMqService>();
+builder.Services.AddSingleton<IItemUpdateService, ItemUpdateService>();
 
 builder.Services.AddSwaggerGen(c =>
 {
-
-    // Set the comments path for the Swagger JSON and UI.
-    
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "Cart API v1", Version = "v1" });
     c.SwaggerDoc("v2", new OpenApiInfo { Title = "Cart API v2", Version = "v2" });
     var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
@@ -52,11 +53,11 @@ app.UseSwagger();
 app.UseSwaggerUI(
     options =>
     {
-        var descriptions = app.DescribeApiVersions();
-        foreach (var description in descriptions)
-        {
-            options.SwaggerEndpoint($"/swagger/{description.GroupName}/swagger.json", description.GroupName.ToUpperInvariant());
-        }
+        //var descriptions = app.DescribeApiVersions();
+        //foreach (var description in descriptions)
+        //{
+        //    options.SwaggerEndpoint($"/swagger/{description.GroupName}/swagger.json", description.GroupName.ToUpperInvariant());
+        //}
     });
 
 app.UseAuthorization();
