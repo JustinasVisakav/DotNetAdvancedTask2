@@ -10,6 +10,6 @@ namespace CatalogSercice.Infrastructure.Queue.Interfaces
 {
     public interface IRabbitMq
     {
-        public bool SendMessage(ItemDtoModel message);
+        public bool SendMessage(string message);
     }
 }

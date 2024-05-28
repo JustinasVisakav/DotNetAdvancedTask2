@@ -12,9 +12,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\CatalogSercice.Infrastructure\CatalogSercice.Infrastructure.csproj" />
 		<ProjectReference Include="..\CatalogService.BLL\CatalogService.BLL.csproj" />
 		<ProjectReference Include="..\CatalogService.Domain\CatalogService.Domain.csproj" />
+		<ProjectReference Include="..\CatalogService.RabbitMq\CatalogService.RabbitMq.csproj" />
 	</ItemGroup>
 
 </Project>

@@ -1,13 +1,7 @@
-﻿using CatalogSercice.Infrastructure.Queue.Interfaces;
+﻿using CatalogSercice.RabbitMq.Interfaces;
 using CatalogService.API.Models;
-using CatalogService.BLL.Services;
-using Microsoft.AspNetCore.Http.HttpResults;
+using CatalogService.RabbitMq.Models;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CatalogService.API.Controllers
 {
@@ -16,17 +10,21 @@ namespace CatalogService.API.Controllers
     public class RabController : ControllerBase
     {
         private readonly IRabbitMq rabbitMq;
+        private readonly FailedMessageStorage stor;
 
-        public RabController(IRabbitMq rabbitMq)
+        public RabController(IRabbitMq rabbitMq, FailedMessageStorage stor)
         {
             this.rabbitMq = rabbitMq;
+            this.stor = stor;
         }
 
         [HttpGet]
         [ProducesResponseType(typeof(List<ItemApiModel>), 200)]
         public IActionResult Get([FromQuery] Guid categoryId)
         {
-            //return Ok(rabbitMq.SendMessage());
+            stor.Messages.Enqueue("one");
+            stor.Messages.Enqueue("two");
+            rabbitMq.CheckFailedMessageQueue();
             return Ok();
         }
     }

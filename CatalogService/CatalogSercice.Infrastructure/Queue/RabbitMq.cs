@@ -5,35 +5,83 @@ using RabbitMQ.Client;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
+using System.Threading.Channels;
 using System.Threading.Tasks;
+using System.Xml;
 
 namespace CatalogSercice.Infrastructure.Queue
 {
     public class RabbitMq : IRabbitMq
     {
-        public bool SendMessage(ItemDtoModel model)
+        private IConnection _connection;
+        private readonly string hostName;
+        private readonly bool persistence;
+        private readonly string routingKey;
+
+        public RabbitMq(string hostName, bool persistence, string routingKey)
         {
-            var transferModel = new TransferModel(model);
-            var factory = new ConnectionFactory() { HostName = "localhost" };
+            this.hostName = hostName;
+            this.persistence = persistence;
+            this.routingKey = routingKey;
 
-            using (var connection = factory.CreateConnection())
-            using (var channel = connection.CreateModel())
+            CreateConnection();
+        }
+
+        public bool SendMessage(string message)
+        {
+            if (ConnectionExists())
             {
-                var properties = channel.CreateBasicProperties();
-                properties.Headers = new Dictionary<string, object>()
+                using (var channel = _connection.CreateModel())
                 {
-                    { "TestMessage","This Is A Test" }
+                    var properties = channel.CreateBasicProperties();
+                    properties.Headers = new Dictionary<string, object>()
+                                {
+                                    { "TestMessage","This Is A Test" }
+                                };
+                    properties.Persistent = persistence;
+                    var encodedMessage = Encoding.UTF8.GetBytes(message);
+
+                    channel.ConfirmSelect();
+                    channel.BasicPublish(exchange: "", routingKey: routingKey, basicProperties: properties, body: encodedMessage);
+                    channel.WaitForConfirmsOrDie();
+                    channel.ConfirmSelect();
+
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private void CreateConnection()
+        {
+            try
+            {
+                var factory = new ConnectionFactory
+                {
+                    HostName = hostName
                 };
-                properties.Persistent = true;
-                var serializedModel = JsonSerializer.Serialize(transferModel);
-                var message = Encoding.UTF8.GetBytes(serializedModel);
 
-                channel.BasicPublish(exchange: "", routingKey: "ItemUpdateQueue", basicProperties: properties, body: message);
+                _connection = factory.CreateConnection();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Could not create connection: {ex.Message}");
+            }
+        }
 
+        private bool ConnectionExists()
+        {
+            if (_connection != null)
+            {
                 return true;
             }
+
+            CreateConnection();
+
+            return _connection != null;
         }
     }
 }

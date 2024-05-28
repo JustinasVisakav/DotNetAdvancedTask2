@@ -1,5 +1,4 @@
-﻿using CatalogSercice.Infrastructure.Queue.Interfaces;
-using CatalogService.API.Models;
+﻿using CatalogService.API.Models;
 using CatalogService.BLL.Interfaces;
 using CatalogService.Domain.Models;
 using Microsoft.AspNetCore.Mvc;

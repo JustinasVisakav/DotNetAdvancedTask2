@@ -1,7 +1,10 @@
-﻿using CatalogSercice.Infrastructure.Queue.Interfaces;
+﻿using CatalogSercice.RabbitMq.Interfaces;
+using CatalogSercice.RabbitMq.Models;
 using CatalogService.BLL.Interfaces;
+using CatalogService.BLL.Wrappers;
 using CatalogService.Domain.Interfaces;
 using CatalogService.Domain.Models;
+using System.Text.Json;
 
 namespace CatalogService.BLL.Services
 {
@@ -40,10 +43,27 @@ namespace CatalogService.BLL.Services
             var updateSuccessful = repo.UpdateItem(item);
             if (updateSuccessful)
             {
-                rabbit.SendMessage(item);
+                rabbit.SendMessage(PrepareItemForMessaging(item));
                 return updateSuccessful;
             }
             return false;
+        }
+
+
+        private string PrepareItemForMessaging(ItemDtoModel item)
+        {
+            var transferModel = TransformItem(item);
+            return JsonSerializer.Serialize(transferModel);
+        }
+
+        private TransferModel TransformItem(ItemDtoModel model)
+        {
+            var transferModel = new TransferModel();
+            transferModel.Name = model.Name;
+            transferModel.Price = model.Price;
+            transferModel.Id = model.Id;
+            transferModel.Image = model.Image;
+            return transferModel;
         }
     }
 }
