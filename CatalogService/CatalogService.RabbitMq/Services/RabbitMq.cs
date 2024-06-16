@@ -28,13 +28,13 @@ namespace CatalogSercice.RabbitMq.Services
             {
                 var result = SendToQueue(message);
                 int retryCounter = 0;
-                while (!result && retryCounter < 3)
+                while (result && retryCounter < 3)
                 {
                     Task.Delay(TimeSpan.FromSeconds(1));
                     result = SendToQueue(message);
                     retryCounter++;
                 }
-                if (result)
+                if (!result)
                     return;
 
                 storage.Messages.Enqueue(message);

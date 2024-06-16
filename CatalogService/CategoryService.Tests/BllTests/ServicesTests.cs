@@ -1,4 +1,5 @@
-﻿using CatalogService.BLL.Services;
+﻿using CatalogSercice.RabbitMq.Interfaces;
+using CatalogService.BLL.Services;
 using CatalogService.DAL.Extensions;
 using CatalogService.DAL.Models;
 using CatalogService.Domain.Interfaces;
@@ -16,7 +17,8 @@ namespace CategoryService.Tests.BllTests
         {
             //Arrange
             var itemRepositoryeMock = CreateItemRepositoryMock();
-            var itemServoce = new ItemService(itemRepositoryeMock.Object);
+            var rabbitMock = CreateRabbitMock();
+            var itemServoce = new ItemService(itemRepositoryeMock.Object, rabbitMock.Object);
 
             //Act
             var result = itemServoce.GetItem(Guid.NewGuid());
@@ -30,7 +32,8 @@ namespace CategoryService.Tests.BllTests
         {
             //Arrange
             var itemRepositoryeMock = CreateItemRepositoryMock();
-            var itemServoce = new ItemService(itemRepositoryeMock.Object);
+            var rabbitMock = CreateRabbitMock();
+            var itemServoce = new ItemService(itemRepositoryeMock.Object, rabbitMock.Object);
 
             //Act
             var result = itemServoce.GetItems();
@@ -44,7 +47,8 @@ namespace CategoryService.Tests.BllTests
         {
             //Arrange
             var itemRepositoryeMock = CreateItemRepositoryMock();
-            var itemServoce = new ItemService(itemRepositoryeMock.Object);
+            var rabbitMock = CreateRabbitMock();
+            var itemServoce = new ItemService(itemRepositoryeMock.Object, rabbitMock.Object);
 
             //Act
             var result = itemServoce.DeleteItem(Guid.NewGuid());
@@ -57,9 +61,10 @@ namespace CategoryService.Tests.BllTests
         public void ItemServiceAddItem()
         {
             //Arrange
-            ItemDtoModel itemModel = new ItemDtoModel(); 
+            ItemDtoModel itemModel = new ItemDtoModel();
             var itemRepositoryeMock = CreateItemRepositoryMock();
-            var itemServoce = new ItemService(itemRepositoryeMock.Object);
+            var rabbitMock = CreateRabbitMock();
+            var itemServoce = new ItemService(itemRepositoryeMock.Object, rabbitMock.Object);
 
             //Act
             var result = itemServoce.AddItem(itemModel);
@@ -74,7 +79,8 @@ namespace CategoryService.Tests.BllTests
             //Arrange
             ItemDtoModel itemModel = new ItemDtoModel();
             var itemRepositoryeMock = CreateItemRepositoryMock();
-            var itemServoce = new ItemService(itemRepositoryeMock.Object);
+            var rabbitMock = CreateRabbitMock();
+            var itemServoce = new ItemService(itemRepositoryeMock.Object, rabbitMock.Object);
 
             //Act
             var result = itemServoce.UpdateItem(itemModel);
@@ -165,9 +171,16 @@ namespace CategoryService.Tests.BllTests
             itemRepositoryMock.Setup(x => x.UpdateItem(It.IsAny<ItemDtoModel>())).Returns(true);
             itemRepositoryMock.Setup(x => x.DeleteItem(It.IsAny<Guid>())).Returns(true);
             itemRepositoryMock.Setup(x => x.AddItem(It.IsAny<ItemDtoModel>())).Returns(true);
-            itemRepositoryMock.Setup(x=>x.GetItems()).Returns(itemModels);
+            itemRepositoryMock.Setup(x => x.GetItems()).Returns(itemModels);
 
             return itemRepositoryMock;
+        }
+
+        private Mock<IRabbitMq> CreateRabbitMock()
+        {
+            var rabbitMock = new Mock<IRabbitMq>();
+            rabbitMock.Setup(x => x.SendMessage(It.IsAny<string>()));
+            return rabbitMock;
         }
 
         private Mock<ICategoryRepository> CreateCategoryRepositoryMock()

@@ -1,0 +1,81 @@
+1. What is the difference between authentication and authorization? 
+
+2. What authorization approaches can you list? What is role-based access control? 
+
+3. What exactly is Identity Management (Identity and Access Management)? 
+
+4. What authentication/authorization protocols do you know? What is the difference between OAuth & OpenID? 
+
+5. What is Authentication/Authorization Token. What is JWT token? What other approaches except authentication/authorization, can we use with security token? 
+
+6. What is Single Sign-On (SSO)? Name the steps to implement SSO. What are the benefits of SSO? 
+
+7. What is the difference between Two-Factor Authentication and Multi-Factor Authentication? 
+
+8. Which of the OAuth flows can be used for user (customer) and which for client (server) authentication? 
+
+
+
+
+1 Authentication is to identify user, authorize is to know what that user can access
+
+2 Authorization approaches:
+Role-Based Access Control (RBAC)
+Attribute-Based Access Control (ABAC)
+Access Control Lists (ACL)
+Discretionary Access Control (DAC)
+Mandatory Access Control (MAC)
+Policy-Based Access Control (PBAC)
+OAuth and OpenID Connect (OIDC)
+JSON Web Tokens (JWT)
+Capability-Based Security
+
+Role-Based Access Control (RBAC) is a widely used authorization approach that assigns permissions to roles rather than to individual users. Users are then assigned roles, which indirectly gives them the permissions associated with those roles.
+
+3 Identity and Access Management (IAM) is a framework of policies, processes, and technologies that ensures the right individuals have access to the right resources at the right times for the right reasons. It encompasses the management of user identities and their associated access permissions within an organization, helping to improve security, compliance, and efficiency.
+
+4 Authentication authorization protocols:
+OAuth 2.0
+OpenID Connect (OIDC)
+JSON Web Tokens (JWT)
+
+OAuth was created specifically to get user permissions to access resources.
+OpenID is addon on OAuth. It is used more for user authentication
+
+5 Authentication/Authorization Tokens are digital keys used to confirm the identity of a user (authentication) and their permissions (authorization) to access specific resources. These tokens are used to ensure secure communication between clients (e.g., web or mobile applications) and servers.
+
+JSON Web Token (JWT) is a compact, URL-safe means of representing claims to be transferred between two parties. The claims in a JWT are encoded as a JSON object that is used as the payload of a JSON Web Signature (JWS) structure or as the plaintext of a JSON Web Encryption (JWE) structure, enabling the claims to be digitally signed or integrity protected with a Message Authentication Code (MAC) and/or encrypted.
+
+Other uses:
+Data Integrity : The payload of the token can include a hash or a checksum of the data.
+Session Management : Tokens can store session information, such as session ID, expiry time, and user roles.
+Single Sign-On (SSO) : A single authentication token issued by an identity provider is used to access multiple applications and services.
+Device Authentication : Devices are issued tokens that they use to authenticate themselves to services.
+Rate Limiting and Quotas : Tokens can include information about rate limits and usage quotas, API gateways or services can enforce these limits based on the token information.
+
+6 Single Sign-On (SSO) is an authentication process that allows a user to access multiple applications or services with one set of login credentials. SSO is particularly useful in environments where users need to access various related systems, reducing the need to log in multiple times and enhancing user experience and productivity.
+
+Steps to Implement SSO:
+Choose an SSO Protocol
+Set Up an Identity Provider (IdP)
+Configure Service Providers (SPs)
+Establish Trust Between IdP and SPs
+Implement Authentication Flow
+Token Management
+Testing and Debugging
+
+Benefits of SSO:
+Improved User Experience
+Increased Productivity
+Enhanced Security
+Simplified Management
+Reduced IT Costs
+
+7 Two-Factor Authentication (2FA) requires exactly two different types of authentication factors, typically combining something you know (like a password) with something you have (like a smartphone) or something you are (like a fingerprint). It enhances security by ensuring that even if one factor (e.g., a password) is compromised, an attacker still needs the second factor to gain access.
+
+Multi-Factor Authentication (MFA), on the other hand, involves two or more different types of factors, providing greater flexibility and higher security. While 2FA always uses exactly two factors, MFA can include additional layers, such as location-based factors or behavioral biometrics. This makes MFA more adaptable and secure, as it is harder for attackers to compromise all required factors.
+
+8 For user authentication, the Authorization Code Flow is the most secure and commonly used, where a user logs in and authorizes an application to access their resources, receiving an authorization code to exchange for an access token. The Implicit Flow is used primarily for single-page applications, where the access token is returned directly in the URL fragment. Both flows involve user interaction for authorization.
+
+For client authentication, the Client Credentials Flow is used when a client (server) needs to authenticate itself to access its own resources or APIs without user involvement. This flow involves the client using its client ID and secret to obtain an access token directly from the authorization server, making it suitable for machine-to-machine authentication. Mixed scenarios include the Resource Owner Password Credentials Flow, where the client handles user credentials directly, and the Device Authorization Flow, designed for devices with limited input capabilities, where users authenticate on a separate device.
+

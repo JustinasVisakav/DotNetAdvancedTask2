@@ -13,6 +13,7 @@ namespace CatalogService.Configuration
         private const string routingKey = "RoutingKey";
         private const string hostName = "HostName";
         private const string persistense = "Persistence";
+        private const string entitlement = "Entitlement";
 
 
         public Config(IConfiguration config)
@@ -22,6 +23,7 @@ namespace CatalogService.Configuration
         public string RoutingKey => GetValue(rabbitMqConfig, routingKey);
         public string HostName => GetValue(rabbitMqConfig, hostName);
         public bool Persistense => GetBoolValue(rabbitMqConfig, persistense);
+        public bool EntitlementEnabled => GetBoolValue(rabbitMqConfig, entitlement);
 
 
         private static string GetValue(IConfiguration config, string key)

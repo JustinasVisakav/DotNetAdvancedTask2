@@ -11,5 +11,6 @@ namespace CatalogService.Configuration.Interfaces
         public string RoutingKey { get; }
         public string HostName { get; }
         public bool Persistense { get; }
+        public bool EntitlementEnabled { get; }
     }
 }

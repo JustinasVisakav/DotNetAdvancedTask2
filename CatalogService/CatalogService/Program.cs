@@ -9,6 +9,8 @@ using CatalogService.Configuration.Interfaces;
 using CatalogService.Configuration;
 using CatalogSercice.RabbitMq.Interfaces;
 using CatalogService.RabbitMq.Models;
+using Microsoft.AspNetCore.Authorization;
+using CatalogService.Infrastructure.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -47,6 +49,7 @@ builder.Services.AddControllersWithViews()
 );
 
 var app = builder.Build();
+app.UseMiddleware<AuthMiddleware>();
 
 app.UseSwagger();
 app.UseSwaggerUI(

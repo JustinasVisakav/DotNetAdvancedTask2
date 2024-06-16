@@ -13,16 +13,16 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
-builder.Services.AddApiVersioning(options =>
-{
-    options.ReportApiVersions = true;
-})
-    .AddApiExplorer(
-    options =>
-    {
-        options.GroupNameFormat = "'v'VVV";
-        options.SubstituteApiVersionInUrl = true;
-    });
+//builder.Services.AddApiVersioning(options =>
+//{
+//    options.ReportApiVersions = true;
+//})
+//    .AddApiExplorer(
+//    options =>
+//    {
+//        options.GroupNameFormat = "'v'VVV";
+//        options.SubstituteApiVersionInUrl = true;
+//    });
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddHostedService<RabbitMqService>();
@@ -53,11 +53,11 @@ app.UseSwagger();
 app.UseSwaggerUI(
     options =>
     {
-        var descriptions = app.DescribeApiVersions();
-        foreach (var description in descriptions)
-        {
-            options.SwaggerEndpoint($"/swagger/{description.GroupName}/swagger.json", description.GroupName.ToUpperInvariant());
-        }
+        //var descriptions = app.DescribeApiVersions();
+        //foreach (var description in descriptions)
+        //{
+        //    options.SwaggerEndpoint($"/swagger/{description.GroupName}/swagger.json", description.GroupName.ToUpperInvariant());
+        //}
     });
 
 app.UseAuthorization();
