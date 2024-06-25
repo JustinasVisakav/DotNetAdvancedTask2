@@ -8,5 +8,6 @@ namespace CartingService.BLL.Interfaces
         public bool AddToCartCart(Guid id, List<ItemModel> items);
         public bool RemoveFromCart(Guid id, List<ItemModel> items);
         public CartModel GetCart(Guid id);
+        public List<CartModel> GetCarts();
     }
 }

@@ -32,6 +32,11 @@ namespace CartingService.BLL.Services
             return repository.GetRecord(id);
         }
 
+        public List<CartModel> GetCarts()
+        {
+            return repository.GetAllRecords().ToList();
+        }
+
         public bool RemoveFromCart(Guid id, List<ItemModel> items)
         {
             var cart = repository.GetRecord(id);

@@ -84,5 +84,21 @@ namespace CatingService.Controllers.V2
 
             return Ok(result);
         }
+
+        /// <summary>
+        /// Gets all cats
+        /// </summary>
+        /// <returns>List of items in the cart</returns>
+        [HttpGet]
+        [ProducesResponseType(typeof(List<CartModel>), 200)]
+        public IActionResult Get()
+        {
+            var result = service.GetCarts();
+
+            if (result == null)
+                return StatusCode(500);
+
+            return Ok(result);
+        }
     }
 }

@@ -126,5 +126,23 @@ namespace CatalogService.API.Controllers
             }
             return Ok(result);
         }
+
+        /// <summary>
+        /// Returns items protperties
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet("/properties/{id}")]
+        [ProducesResponseType(typeof(ItemPropertiesApiModel), 200)]
+        public IActionResult GetPropertiesById(Guid id)
+        {
+            var result = new ItemPropertiesApiModel();
+            result.Properties.Add("key", "value");
+            if (result == null)
+            {
+                return StatusCode(500);
+            }
+            return Ok(result);
+        }
     }
 }
