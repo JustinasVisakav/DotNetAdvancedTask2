@@ -10,6 +10,8 @@ using CatingService.BLL.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddLogging();
+
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -43,6 +45,7 @@ builder.Services.AddRepositories();
 builder.Services.AddDatabase();
 builder.Services.AddBllServices();
 builder.Services.AddScoped<CartService>();
+builder.Services.AddApplicationInsightsTelemetry();
 
 var app = builder.Build();
 

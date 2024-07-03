@@ -22,9 +22,9 @@
       "SwaggerKey": "CatalogService"
     },
     {
-      "UpstreamPathTemplate": "/gateway/properties/{id}",
+      "UpstreamPathTemplate": "/gateway/properties/{everything}",
       "UpstreamHttpMethod": [],
-      "DownstreamPathTemplate": "/properties/{id}",
+      "DownstreamPathTemplate": "/properties/{everything}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -95,7 +95,7 @@
 
   "Aggregates": [
     {
-      "UpstreamPathTemplate": "/agg/{id}",
+      "UpstreamPathTemplate": "/agg/{everything}",
       "RouteKeys": [ "CatalogItem", "CatalogItemProperties" ]
     }
   ],

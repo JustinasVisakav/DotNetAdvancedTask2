@@ -8,6 +8,7 @@ using System.Configuration;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddLogging();
 
 builder.Services.AddControllers();
 builder.Configuration.AddJsonFile("ocelot.json", optional: false, reloadOnChange: true);
@@ -16,6 +17,7 @@ builder.Services.AddOcelot().AddCacheManager(x=>x.WithDictionaryHandle());
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSwaggerForOcelot(builder.Configuration);
+builder.Services.AddApplicationInsightsTelemetry();
 
 var app = builder.Build();
 

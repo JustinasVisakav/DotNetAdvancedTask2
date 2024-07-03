@@ -14,6 +14,8 @@ using CatalogService.Infrastructure.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddLogging();
+
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -47,6 +49,7 @@ builder.Services.AddControllersWithViews()
     .AddNewtonsoftJson(options =>
     options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
 );
+builder.Services.AddApplicationInsightsTelemetry();
 
 var app = builder.Build();
 app.UseMiddleware<AuthMiddleware>();

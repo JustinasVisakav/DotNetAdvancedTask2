@@ -3,6 +3,7 @@ using CatalogService.BLL.Interfaces;
 using CatalogService.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Routing;
+using Microsoft.Extensions.Logging;
 
 namespace CatalogService.API.Controllers
 {
@@ -12,11 +13,14 @@ namespace CatalogService.API.Controllers
     {
         private readonly ICategoryService service;
         private readonly IItemService itemService;
+        private readonly ILogger<CategoryController> logger;
+        private const string controllerName = "CategoryController";
 
-        public CategoryController(ICategoryService service,IItemService itemService)
+        public CategoryController(ICategoryService service, IItemService itemService, ILogger<CategoryController> logger)
         {
             this.service = service;
             this.itemService = itemService;
+            this.logger = logger;
         }
 
         /// <summary>
@@ -27,18 +31,23 @@ namespace CatalogService.API.Controllers
         [ProducesResponseType(typeof(List<CategoryApiModel>), 200)]
         public IActionResult Get()
         {
+            logger.LogInformation($"Location: {controllerName}, request Get categories");
             var categories = service.GetCategories();
 
             if (categories == null)
             {
+                logger.LogInformation($"Location: {controllerName}, request failed");
                 return StatusCode(500);
             }
 
             if (categories.Count == 0)
             {
+                logger.LogInformation($"Location: {controllerName}, bad request");
                 return BadRequest("No records found");
             }
-            return Ok(categories.Select(x=>x.ToApiModel()).ToList());
+
+            logger.LogInformation($"Location: {controllerName}, request success");
+            return Ok(categories.Select(x => x.ToApiModel()).ToList());
         }
 
         /// <summary>
@@ -50,13 +59,16 @@ namespace CatalogService.API.Controllers
         [ProducesResponseType(typeof(CategoryApiModel), 200)]
         public IActionResult GetCategory(Guid id)
         {
+            logger.LogInformation($"Location: {controllerName}, request {id} for get");
             var category = service.GetCategory(id);
 
             if (category == null)
             {
+                logger.LogInformation($"Location: {controllerName}, request {id} failed");
                 return StatusCode(500);
             }
 
+            logger.LogInformation($"Location: {controllerName}, request {id} success");
             return Ok(category.ToApiModel());
         }
 
@@ -69,9 +81,12 @@ namespace CatalogService.API.Controllers
         [ProducesResponseType(typeof(bool), 200)]
         public IActionResult DeleteCategory(Guid id)
         {
+            logger.LogInformation($"Location: {controllerName}, request {id} for delete");
+
             var category = service.GetCategory(id);
-            if(category == null)
+            if (category == null)
             {
+                logger.LogInformation($"Location: {controllerName}, request {id} Failed");
                 return StatusCode(500);
             }
             if (category.Items != null)
@@ -84,8 +99,12 @@ namespace CatalogService.API.Controllers
             var result = service.DeleteCategory(id);
 
             if (!result)
+            {
+                logger.LogInformation($"Location: {controllerName}, request {id} Failed");
                 return StatusCode(500);
+            }
 
+            logger.LogInformation($"Location: {controllerName}, request {id} success");
             return Ok(result);
         }
 
@@ -98,6 +117,7 @@ namespace CatalogService.API.Controllers
         [ProducesResponseType(typeof(bool), 200)]
         public IActionResult Update([FromBody] CategoryDtoModel model)
         {
+            logger.LogInformation($"Location: {controllerName}, request {model.Id} for modify");
             if (model.Items != null)
             {
                 foreach (var item in model.Items)
@@ -108,8 +128,12 @@ namespace CatalogService.API.Controllers
             var result = service.UpdateCategory(model);
 
             if (!result)
+            {
+                logger.LogInformation($"Location: {controllerName}, request {model.Id} Failed");
                 return StatusCode(500);
+            }
 
+            logger.LogInformation($"Location: {controllerName}, request {model.Id} Success");
             return Ok(result);
         }
 
@@ -122,9 +146,10 @@ namespace CatalogService.API.Controllers
         [ProducesResponseType(typeof(bool), 200)]
         public IActionResult Post([FromBody] CategoryDtoModel model)
         {
-            if(model.Items != null)
+            logger.LogInformation($"Location: {controllerName}, request {model.Id} for insert");
+            if (model.Items != null)
             {
-                foreach(var item in model.Items)
+                foreach (var item in model.Items)
                 {
                     itemService.AddItem(item);
                 }
@@ -132,8 +157,12 @@ namespace CatalogService.API.Controllers
             var result = service.AddCategory(model);
 
             if (!result)
+            {
+                logger.LogInformation($"Location: {controllerName}, request {model.Id} Failed");
                 return StatusCode(500);
+            }
 
+            logger.LogInformation($"Location: {controllerName}, request {model.Id} Success");
             return Ok(result);
         }
     }
