@@ -4,6 +4,8 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <ApplicationInsightsResourceId>/subscriptions/2a7984f8-9b12-4d2d-95b2-50ecac731dba/resourceGroups/DotNetAdvanced/providers/microsoft.insights/components/MentoringApiGateway</ApplicationInsightsResourceId>
+    <UserSecretsId>d5731501-d0f1-46b8-8daf-7537615669c7</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>

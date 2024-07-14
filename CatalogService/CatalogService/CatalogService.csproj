@@ -7,6 +7,8 @@
     <InvariantGlobalization>false</InvariantGlobalization>
 	  <GenerateRuntimeConfigurationFiles>True</GenerateRuntimeConfigurationFiles>
 	  <GenerateDocumentationFile>true</GenerateDocumentationFile>
+	  <ApplicationInsightsResourceId>/subscriptions/2a7984f8-9b12-4d2d-95b2-50ecac731dba/resourceGroups/DotNetAdvanced/providers/microsoft.insights/components/DotNetAdvancedApp</ApplicationInsightsResourceId>
+	  <UserSecretsId>01e127ee-29e9-48e2-a537-1b157bc829a4</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>

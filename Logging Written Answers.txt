@@ -1,0 +1,36 @@
+1. Why Serviceability and Observability NFRs are important? Who would you cover them with? 
+
+2. What is the difference between logging and tracing? What are the peculiarities of logging and tracing in a distributed environment? 
+
+3. What is the Correlation Context? How can we pass it through all hierarchy of the services? 
+
+4. Which APM to choose? Think of some criteria. 
+
+5. What is Open Telemetry? 
+
+
+
+1 Serviceability and observability are crucial non-functional requirements (NFRs) because they ensure that a system is maintainable, reliable, and performant. Serviceability refers to the ease with which a system can be maintained, including debugging, updating, and managing it effectively. This is important to minimize downtime, reduce the impact of issues, and ensure quick recovery from failures. Observability, on the other hand, involves the ability to monitor the system's internal states based on outputs such as logs, metrics, and traces. This visibility allows for proactive issue detection, root cause analysis, and performance optimization, which are essential for maintaining system health and delivering a reliable user experience.
+
+To cover serviceability, one should implement comprehensive logging, automated testing, and efficient deployment pipelines, ensuring that the system is easy to update and debug. Observability can be enhanced through robust monitoring tools like Prometheus, Grafana, and ELK stack for centralized logging, metrics collection, and visualization. Additionally, implementing distributed tracing tools like Jaeger or Zipkin helps track requests across microservices, aiding in performance tuning and troubleshooting. These practices empower development and operations teams to maintain high availability and performance, quickly identify and resolve issues, and continuously improve the system based on real-time insights.
+
+2 Logging and tracing serve distinct yet complementary purposes in monitoring and diagnosing applications. Logging involves recording discrete events or messages from an application, typically capturing information such as errors, warnings, and informational messages that indicate the application's state at specific points in time. Logs are useful for understanding what happened in the system at a given moment, diagnosing issues, and auditing. Tracing, on the other hand, tracks the flow of a single request or transaction through a system, capturing the end-to-end path it takes, including the time spent in each component. Tracing provides a detailed, sequential view of how requests move through various services, making it invaluable for understanding system behavior, identifying performance bottlenecks, and pinpointing the root cause of issues.
+
+In a distributed environment, logging must handle the complexity of aggregating logs from multiple services, often spread across various servers or containers. This requires a centralized logging solution, such as the ELK stack (Elasticsearch, Logstash, Kibana) or a cloud-based service, to collect, store, and analyze logs efficiently. Each service must generate consistent and meaningful log entries, including context like service names and timestamps, to enable effective troubleshooting. Tracing in a distributed system adds the challenge of correlating traces across different services and possibly different infrastructure layers. Tools like Jaeger, Zipkin, or OpenTelemetry are used to propagate trace context (e.g., trace IDs) through all services involved in handling a request, allowing the complete transaction path to be reconstructed. This provides a comprehensive view of inter-service interactions, aiding in the detection of latency issues and understanding the overall health of the distributed system.
+
+3 Correlation Context refers to the set of metadata that is propagated alongside a request as it travels through various services in a distributed system. This context typically includes unique identifiers such as trace IDs and span IDs, which are essential for correlating logs and traces across different services and layers. The correlation context allows for the tracking of a single request's journey through the entire system, enabling a comprehensive view of its path and performance. This is crucial for effective debugging, performance monitoring, and root cause analysis in complex microservices architectures.
+
+To pass the correlation context through all levels of the service hierarchy, it is essential to ensure that every service in the system can recognize and propagate the necessary identifiers. This can be achieved by using standard tracing libraries or instrumentation tools such as OpenTelemetry, Jaeger, or Zipkin. These tools automatically generate and attach trace and span IDs to outgoing requests and propagate them to downstream services. Typically, this involves including the correlation context in the headers of HTTP requests or in the metadata of other communication protocols (like gRPC). Each service must be configured to extract the correlation context from incoming requests, use it for logging and tracing, and then pass it along with any outgoing requests, thus maintaining the traceability of the request across the entire service chain.
+
+4 Choosing an Application Performance Monitoring (APM) tool depends on several key criteria that align with your organization's needs and technical environment. Here are some critical factors to consider:
+	Integration and Compatibility
+	Ease of Use and Setup
+	Features and Capabilities
+	Scalability and Performance
+	Cost
+	Support and Community
+	Customization and Extensibility
+	Security and Compliance
+
+
+5 OpenTelemetry is an open-source observability framework designed to provide standardized instrumentation for collecting and exporting telemetry data such as metrics, logs, and traces from applications. It aims to unify the collection of this data across various programming languages, frameworks, and platforms, facilitating seamless integration with different monitoring and observability tools. By offering a consistent API and SDKs, OpenTelemetry enables developers to instrument their code once and export telemetry data to multiple backends without vendor lock-in. This helps in gaining comprehensive insights into application performance and behavior across distributed systems, ultimately aiding in debugging, monitoring, and optimizing applications.
